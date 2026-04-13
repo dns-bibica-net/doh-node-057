@@ -9,7 +9,7 @@ A secure, high-performance DNS-over-HTTPS (DoH) proxy running on Cloudflare's gl
 
 *   **100% Free Usage**: Runs on the Cloudflare Pages Free Tier with a limit of **100,000 requests per day**. With an average consumption of 4k-10k requests/device/day, a single account can support 10-20 devices comfortably.
 *   **Custom Domain Scaling**: Attach your own domain for a professional, short DNS endpoint. You can spread usage across multiple Cloudflare accounts to multiply your quota (100k per account) while keeping your custom domains.
-*   **Smart Adblocking**: Local filtering using professional lists (AdGuard, ABPVN, 1Hosts ...), automatically updated **every hour**.
+*   **Smart Adblocking**: Local filtering using professional lists (AdGuard, ABPVN, Bypass-VN, etc.), automatically updated **every hour**.
 *   **ECS Geo-Optimization (RFC 7871)**: Injects EDNS Client Subnet (IPv4 `/24`, IPv6 `/48`) to ensure CDNs (Akamai, CloudFront, Fastly, BunnyCDN, Gcore) resolve you to the nearest servers.
 *   **Sequential Failover Reliability**: 
     *   **Primary/Fallback**: Tries Cloudflare Gateway primary endpoint first, with automatic failover to a backup endpoint if it fails.
@@ -31,6 +31,7 @@ A secure, high-performance DNS-over-HTTPS (DoH) proxy running on Cloudflare's gl
 2.  Connect your GitHub and select the forked repository.
 3.  **Build Settings**: Leave everything as **default** (no changes needed).
 4.  **Save and Deploy**.
+5.  **Important:** Go to the **Actions** tab in your GitHub repository, select `Update DNS Blocklists`, and click **Enable workflow**. Then, click **Run workflow** to fetch the initial blocklists.
 
 ---
 
@@ -70,7 +71,7 @@ Detailed rules:
 
 *   **`blocklists.txt`** / **`allowlists.txt`**: Automatically updated **every hour**.
     *   **Logic**: Domains in `allowlists.txt` override `blocklists.txt`, ensuring they are never blocked even if flagged by a filter (prevents false positives).
-    *   **How to configure**: Edit the URLs in the `curl` command inside [update_lists.sh](update_lists.sh#L34-L43) to add or remove filtering sources.
+    *   **How to configure**: Edit the URLs in the `curl` command inside [update_lists.sh#L34-L43](update_lists.sh) to add or remove filtering sources.
 *   **`private_tlds.txt`**: Add your custom local domains or router URLs here.
 *   **`redirect_rules.txt`**: Redirects domain A to domain B using a CNAME record. Perfect for forcing specific CDN results.
     *   **Format**: `source-domain target-domain`
